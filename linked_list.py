@@ -59,10 +59,11 @@ M4BlockChain.append(create_genesis_block())
 
 # write a function `next_block` to generate a block
 def next_block(last_block):
+    
     my_index = last_block.index + 1
-    my_content = "this is block "+str(my_index)
     my_timestamp = datetime.now()
-    my_previous_hash = last_block.hash()
+    my_content = "this is block "+str(my_index)
+    my_previous_hash = last_block.hash
     
     new_block = Block(my_index, my_timestamp , my_content, my_previous_hash)
     print("this is the new block: ", new_block, my_index)
@@ -76,8 +77,11 @@ def next_block(last_block):
 # append 5 blocks to the blockchain
 def app_five(block_list):
     
+
     for i in range(0,5):
-        M4BlockChain.append(next_block(M4BlockChain[-1]))
+        l = len(block_list)   
+        last_block = block_list[l-1]
+        block_list.append(next_block(last_block))
 
     pass
 
@@ -92,13 +96,14 @@ print(len(M4BlockChain))
 # In[10]:
 
 
-print("this is the second block:", M4BlockChain[4].index)
+print("this is the second block:", M4BlockChain[5].index)
 
 
-# In[ ]:
+# In[11]:
 
 
-
+#M4BlockChain.append(app_five(M4BlockChain))
+#print(len(M4BlockChain))
 
 
 # In[ ]:
