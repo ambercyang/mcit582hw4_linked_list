@@ -16,7 +16,7 @@ class Block:
       self.timestamp = timestamp
       self.content = content
       self.previous_hash = previous_hash
-      self.hash = self.calc_hash()
+      self.hash = self.calc_hash
    
     def calc_hash(self):
       sha = hashlib.sha256()
@@ -50,6 +50,7 @@ def create_genesis_block():
 # In[6]:
 
 
+#M4BlockChain.append(create_genesis_block())
 M4BlockChain.append(create_genesis_block())
 
 
@@ -58,12 +59,13 @@ M4BlockChain.append(create_genesis_block())
 
 # write a function `next_block` to generate a block
 def next_block(last_block):
+    my_index = last_block.index + 1
+    my_content = "this is block "+str(my_index)
+    my_timestamp = datetime.now()
+    my_previous_hash = last_block.hash()
     
-    index = last_block.index+1
-    content = "this is block "+str(index)
-    previous_hash = last_block.calc_hash()
-    new_block = Block(index = index, timestamp=datetime.now(), content=content, previous_hash=previous_hash)
-    print("this is the new block: ", new_block, index)
+    new_block = Block(my_index, my_timestamp , my_content, my_previous_hash)
+    print("this is the new block: ", new_block, my_index)
 
     return new_block
 
@@ -74,20 +76,9 @@ def next_block(last_block):
 # append 5 blocks to the blockchain
 def app_five(block_list):
     
-    previous_block = block_list[-1]
-    last_block = block_list[-1]
-    
-    if len(block_list) == 1:
-        M4BlockChain[0]=next_block(last_block)
-        for i in range(0,4):
-            new_block = next_block(last_block)
-            M4BlockChain.append(new_block)
-    
-    else:
-        for i in range(0,5):
-            new_block = next_block(last_block)
-            M4BlockChain.append(new_block)
-    
+    for i in range(0,5):
+        M4BlockChain.append(next_block(M4BlockChain[-1]))
+
     pass
 
 
@@ -95,12 +86,20 @@ def app_five(block_list):
 
 
 M4BlockChain.append(app_five(M4BlockChain))
+print(len(M4BlockChain))
 
 
-# In[12]:
+# In[10]:
 
 
-print("this is the second block:", M4BlockChain[3].content)
+print("this is the second block:", M4BlockChain[4].index)
+
+
+# In[11]:
+
+
+M4BlockChain.append(app_five(M4BlockChain))
+print(len(M4BlockChain))
 
 
 # In[ ]:
