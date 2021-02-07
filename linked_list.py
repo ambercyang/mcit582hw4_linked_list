@@ -7,7 +7,7 @@
 import hashlib
 
 
-# In[12]:
+# In[2]:
 
 
 class Block:
@@ -77,20 +77,27 @@ def app_five(block_list):
     previous_block = block_list[-1]
     last_block = block_list[-1]
     
-    for i in range(0,5):
-        new_block = next_block(last_block)
-        M4BlockChain.append(new_block)
+    if len(block_list) == 1:
+        M4BlockChain[0]=next_block(last_block)
+        for i in range(0,4):
+            new_block = next_block(last_block)
+            M4BlockChain.append(new_block)
+    
+    else:
+        for i in range(0,5):
+            new_block = next_block(last_block)
+            M4BlockChain.append(new_block)
     
     pass
 
 
-# In[13]:
+# In[9]:
 
 
 M4BlockChain.append(app_five(M4BlockChain))
 
 
-# In[17]:
+# In[12]:
 
 
 print("this is the second block:", M4BlockChain[3].content)
